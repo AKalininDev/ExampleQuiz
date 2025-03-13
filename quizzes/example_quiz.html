@@ -915,10 +915,7 @@ int main() {
             return result.join('\n');
         }
 
-        // Helper function to highlight a single line of code without comments
         function highlightCodePart(text) {
-            // Highlight string literals
-            text = text.replace(/"([^"]*)"/g, '"<span class="string">$1</span>"');
 
             // Highlight preprocessor directives
             if (text.trim().startsWith('#')) {
@@ -946,7 +943,6 @@ int main() {
 
             return text;
         }
-
         // Function to highlight TODO text with syntax highlighting preserved - FIXED
         function highlightTodo(fullCode, todoText) {
             // Normalize line endings without trimming
