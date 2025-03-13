@@ -1,0 +1,1371 @@
+<!-- Claude AI was used to generate web elements. -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ Functions Warm-up Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #2c3e50;
+        }
+
+        .problem-statement {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 5px solid #3498db;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .code-container {
+            position: relative;
+            display: flex;
+            background-color: #282c34;
+            color: #abb2bf;
+            border: 1px solid #555;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+
+        .code-container code {
+            flex-grow: 1;
+            font-family: 'Consolas', 'Monaco', monospace;
+            padding: 20px 0 20px 10px;
+            white-space: pre;
+            overflow-x: auto;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .code-explanation {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 0.95em;
+            border-left: 4px solid #3498db;
+        }
+
+        .todo {
+            background-color: #ffeeee;
+            color: #e74c3c;
+            padding: 2px 5px;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background-color: #ffcc00;
+            color: #333;
+            font-weight: bold;
+            border-radius: 3px;
+            padding: 0 3px;
+        }
+
+        .highlight .comment {
+            color: #333;
+        }
+
+        .quiz-section {
+            background-color: #f1f8ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border: 1px solid #bde0fe;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .quiz-options {
+            margin-top: 15px;
+        }
+
+        .option {
+            margin-bottom: 12px;
+            padding: 12px;
+            background-color: #f7f7f7;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid #e0e0e0;
+            transition: all 0.2s ease;
+        }
+
+        .option pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .option:hover {
+            background-color: #e9e9e9;
+            transform: translateY(-2px);
+        }
+
+        .selected {
+            background-color: #d0e8ff;
+            border-color: #a0c8ff;
+        }
+
+        .correct {
+            background-color: #d0ffd0;
+            border-color: #90ee90;
+        }
+
+        .incorrect {
+            background-color: #ffd0d0;
+            border-color: #ffb0b0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .button {
+            padding: 12px 20px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 12px;
+            font-size: 1em;
+            transition: background-color 0.2s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .button:hover {
+            background-color: #3275e4;
+            transform: translateY(-2px);
+        }
+
+        .button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .button.hint-btn {
+            background-color: #f39c12;
+        }
+
+        .button.hint-btn:hover {
+            background-color: #e67e22;
+        }
+
+        .output-container {
+            margin-top: 25px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f8f8f8;
+        }
+
+        .step {
+            margin-bottom: 40px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .progress-container {
+            margin-bottom: 25px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .progress-step {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active {
+            background-color: #4285f4;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .progress-step.completed {
+            background-color: #34a853;
+            color: white;
+        }
+
+        .progress-line {
+            flex-grow: 1;
+            height: 4px;
+            background-color: #e0e0e0;
+            margin-top: 17px;
+            position: relative;
+        }
+
+        .progress-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            background-color: #34a853;
+            transition: width 0.5s ease;
+        }
+
+        .progress-line.half::after {
+            width: 50%;
+        }
+
+        .progress-line.full::after {
+            width: 100%;
+        }
+
+        .timer {
+            background-color: #f5f5f5;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .timer.warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border-color: #ffeeba;
+        }
+
+        .timer.danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .final-code {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .explanation {
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+            border-left: 4px solid #4285f4;
+        }
+
+        .hint {
+            background-color: #fef9e7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+            border-left: 4px solid #f1c40f;
+        }
+
+        .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+
+        .keyword {
+            color: #c586c0;
+        }
+
+        .string {
+            color: #ce9178;
+        }
+
+        .function {
+            color: #dcdcaa;
+        }
+
+        .type {
+            color: #4ec9b0;
+        }
+
+        .scores {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .score-display {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        /* Fix for code and line number alignment */
+        .line-numbers {
+            flex-shrink: 0;
+            position: relative;
+            width: 30px;
+            background-color: #21252b;
+            color: #abb2bf;
+            padding: 20px 5px;
+            text-align: right;
+            border-right: 1px solid #333;
+            user-select: none;
+            margin: 0;
+            line-height: 1.5;
+            overflow: hidden;
+        }
+
+        /* New class for line numbers */
+        .line-num {
+            display: block;
+            height: 1.5em;
+            line-height: 1.5;
+        }
+
+        /* Ensure line heights match exactly */
+        .line-numbers,
+        .code-container code {
+            line-height: 1.5;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            /* Ensure consistent font size */
+            white-space: pre;
+            /* Preserve whitespace exactly as is */
+            overflow-wrap: normal;
+        }
+
+        .code-container code {
+            display: block;
+            overflow-x: auto;
+        }
+
+        /* Copy button styles */
+        .copy-btn {
+            background-color: #34a853;
+            padding: 8px 15px;
+            margin-left: 10px;
+            float: right;
+        }
+
+        .copy-btn:hover {
+            background-color: #2e9549;
+        }
+
+        .copy-success {
+            background-color: #4285f4 !important;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .option {
+                padding: 8px;
+            }
+
+            .button {
+                padding: 10px 15px;
+                font-size: 0.9em;
+                margin-bottom: 10px;
+            }
+
+            .code-container {
+                padding: 0;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>C++ Functions Warm-up Quiz</h1>
+
+    <div class="progress-container">
+        <div class="timer" id="timer">Time remaining: <span id="time">5:00</span></div>
+
+        <div class="progress-indicator">
+            <div class="progress-step active" id="step1">1</div>
+            <div class="progress-line" id="line1"></div>
+            <div class="progress-step" id="step2">2</div>
+            <div class="progress-line" id="line2"></div>
+            <div class="progress-step" id="step3">3</div>
+        </div>
+    </div>
+
+    <div class="step" id="problemStatement">
+        <h2>Step 1: Problem Statement</h2>
+        <div class="problem-statement">
+            <p><strong>Text Message Encrypter</strong></p>
+            <p>You need to create a program that "encodes" a text message by replacing vowels with numbers:</p>
+            <p>
+                a → 1<br>
+                e → 2<br>
+                i → 3<br>
+                o → 4<br>
+                u → 5
+            </p>
+            <p><strong>Expected Behavior:</strong> When a user enters "HEllo World", the output should be "H2ll4 W4rld".
+            </p>
+        </div>
+        <button class="button" id="startQuizBtn">Continue to Code Review</button>
+    </div>
+
+    <div class="step hidden" id="quizSection">
+        <h2>Step 2: Code Review</h2>
+        <p>Let's review the code step by step and complete the missing parts:</p>
+
+        <!-- Explanation ABOVE the code (moved as requested) -->
+        <div id="explanationContainer" class="code-explanation"></div>
+
+        <!-- Code container with line numbers -->
+        <div id="codeContainer" class="code-container">
+            <div class="line-numbers" id="lineNumbers"></div>
+            <code id="codeContent"></code>
+        </div>
+
+        <!-- Question will appear BELOW the code -->
+        <div id="currentQuestion" class="hidden">
+            <div class="quiz-section">
+                <p id="questionText">Which implementation correctly completes this part?</p>
+                <div class="quiz-options" id="options">
+                    <!-- Options will be added here dynamically -->
+                </div>
+                <div class="hint" id="hintBox">Hint: Look carefully at the requirements.</div>
+                <button class="button hint-btn" id="hintBtn">Show Hint</button>
+            </div>
+        </div>
+
+        <!-- Answer feedback and next button -->
+        <div class="explanation" id="explanation"></div>
+        <button class="button hidden" id="nextBtn">Continue</button>
+    </div>
+
+    <div class="step hidden" id="resultSection">
+        <h2>Step 3: See It in Action!</h2>
+
+        <div class="scores" id="quizScores">
+            <h3>Your Performance</h3>
+            <p>You answered <span id="correctCount">0</span> out of <span id="totalQuestions">3</span> questions
+                correctly.</p>
+            <div class="score-display" id="scoreDisplay">0%</div>
+        </div>
+
+        <p>Here's the complete code: <button class="button copy-btn" id="copyCodeBtn" title="Copy code to clipboard">
+                <span id="copyBtnText">Copy Code</span>
+            </button></p>
+
+        <div class="code-container final-code" id="finalCode">
+            <div class="line-numbers" id="finalLineNumbers"></div>
+            <code id="finalCodeContent"></code>
+        </div>
+
+        <div class="output-container">
+            <h3>Try it yourself!</h3>
+            <p>Enter a message: <input type="text" id="messageInput" placeholder="Type a message here"
+                    value="Hello World"></p>
+            <button class="button" id="runCodeBtn">Run Code</button>
+
+            <div id="outputDisplay" style="margin-top: 15px;">
+                <p><strong>Output will appear here...</strong></p>
+            </div>
+        </div>
+
+        <button class="button" id="resetQuizBtn">Start Over</button>
+    </div>
+
+    <script>
+        // DOM elements
+        const startQuizBtn = document.getElementById('startQuizBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const resetQuizBtn = document.getElementById('resetQuizBtn');
+        const runCodeBtn = document.getElementById('runCodeBtn');
+        const hintBtn = document.getElementById('hintBtn');
+        const hintBox = document.getElementById('hintBox');
+        const copyCodeBtn = document.getElementById('copyCodeBtn');
+        const copyBtnText = document.getElementById('copyBtnText');
+
+        const messageInput = document.getElementById('messageInput');
+        const outputDisplay = document.getElementById('outputDisplay');
+        const finalCodeElement = document.getElementById('finalCode');
+        const finalCodeContent = document.getElementById('finalCodeContent');
+        const finalLineNumbers = document.getElementById('finalLineNumbers');
+        const explanationElement = document.getElementById('explanation');
+        const explanationContainer = document.getElementById('explanationContainer');
+
+        const problemStatement = document.getElementById('problemStatement');
+        const quizSection = document.getElementById('quizSection');
+        const resultSection = document.getElementById('resultSection');
+        const currentQuestion = document.getElementById('currentQuestion');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('options');
+        const codeContainer = document.getElementById('codeContainer');
+        const codeContent = document.getElementById('codeContent');
+        const lineNumbers = document.getElementById('lineNumbers');
+
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const line1 = document.getElementById('line1');
+        const line2 = document.getElementById('line2');
+
+        const timeDisplay = document.getElementById('time');
+        const timer = document.getElementById('timer');
+
+        const correctCount = document.getElementById('correctCount');
+        const totalQuestions = document.getElementById('totalQuestions');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+
+        // Variables
+        let countdownInterval;
+        let timeLeft = 300; // 5 minutes in seconds
+        let currentChunkIndex = 0;
+        let userAnswers = [];
+        let correctAnswers = 0;
+
+        // The final, complete program we're building - CORRECTED VERSION
+        let completeCode = `#include <iostream>
+#include <string>
+// Function to encode message by replacing vowels with numbers
+std::string encodeMessage(std::string message) {
+    for(int i = 0; i < message.size(); i++) {
+        if(message[i] == 'a' || message[i] == 'A') message[i] = '1';
+        else if(message[i] == 'e' || message[i] == 'E') message[i] = '2';
+        else if(message[i] == 'i' || message[i] == 'I') message[i] = '3';
+        else if(message[i] == 'o' || message[i] == 'O') message[i] = '4';
+        else if(message[i] == 'u' || message[i] == 'U') message[i] = '5';
+    }
+    return message;
+}
+int main() {
+    std::string message;
+    std::cout << "Enter a message: ";
+    std::getline(std::cin, message);
+    
+    std::string encoded = encodeMessage(message);
+    
+    std::cout << "Original: " << message << std::endl;
+    std::cout << "Encoded: " << encoded << std::endl;
+    
+    return 0;
+}`;
+
+        // Code chunks with questions and explanations
+        const codeSequence = [
+            {
+                code: `#include <iostream>
+#include <string>
+
+// TODO: Write the function declaration`,
+                displayCode: `#include <iostream>
+#include <string>
+
+// TODO: Write the function declaration
+
+int main() {
+    std::string message;
+    std::cout << "Enter a message: ";
+    std::getline(std::cin, message);
+    
+    std::string encoded = encodeMessage(message);
+    
+    std::cout << "Original: " << message << std::endl;
+    std::cout << "Encoded: " << encoded << std::endl;
+    
+    return 0;
+}`,
+                explanation: "<p>This program starts with the header files: &lt;iostream&gt; for input/output operations and &lt;string&gt; for string manipulation.</p><p> Note that main() calls a function 'encodeMessage()'. It needs to be declared before it is used. The function takes a string as input and returns an encoded result.</p>",
+                isQuestion: true,
+                question: "What is the correct function declaration for our encodeMessage() function?",
+                hint: "The function needs to take a string parameter and return the transformed string. Look at how it's used in main().",
+                options: [
+                    {
+                        text: "void encodeMessage(std::string message);",
+                        correct: false,
+                        explanation: "Incorrect. This declares a function that returns void (nothing), but we need to return the encoded message. In main(), we're assigning the result to 'encoded', so the function must return a string."
+                    },
+                    {
+                        text: "std::string encodeMessage(std::string message);",
+                        correct: true,
+                        explanation: "Correct! This declares a function that takes a string parameter and returns a string (the encoded message). This matches how it's used in main()."
+                    },
+                    {
+                        text: "string encodeMessage(string message);",
+                        correct: false,
+                        explanation: "Incorrect. Without the std:: namespace qualifier, the compiler won't recognize 'string'. C++ requires either using the std namespace with 'using namespace std;' or explicitly qualifying with std::string."
+                    }
+                ],
+                resultCode: "std::string encodeMessage(std::string message);",
+                updatedDisplay: `#include <iostream>
+#include <string>
+
+std::string encodeMessage(std::string message);
+
+int main() {
+    std::string message;
+    std::cout << "Enter a message: ";
+    std::getline(std::cin, message);
+    
+    std::string encoded = encodeMessage(message);
+    
+    std::cout << "Original: " << message << std::endl;
+    std::cout << "Encoded: " << encoded << std::endl;
+    
+    return 0;
+}`
+            },
+            {
+                code: `std::string encodeMessage(std::string message) {
+    // TODO: Write the loop to process each character`,
+                displayCode: `#include <iostream>
+#include <string>
+
+std::string encodeMessage(std::string message);
+
+std::string encodeMessage(std::string message) {
+    // TODO: Write the loop to process each character
+    
+    return message;
+}
+
+int main() {
+    std::string message;
+    std::cout << "Enter a message: ";
+    std::getline(std::cin, message);
+    
+    std::string encoded = encodeMessage(message);
+    
+    std::cout << "Original: " << message << std::endl;
+    std::cout << "Encoded: " << encoded << std::endl;
+    
+    return 0;
+}`,
+                explanation: "<p>Now, we need to implement our encodeMessage() function.</p><p>The function already has a skeleton with a return statement, but it needs a loop to process each character in the input string sequentially.</p>",
+                isQuestion: true,
+                question: "Which loop correctly iterates through each character in the string?",
+                hint: "Strings in C++ can be accessed like arrays, with indices starting from 0. You'll need to use the string's size or length method to determine how many characters to process.",
+                options: [
+                    {
+                        text: "for(int i = 0; i < message.size(); i++) {",
+                        correct: true,
+                        explanation: "Correct! This loop will iterate through each character in the string by index, starting at 0 and going up to size()-1, which is exactly what we need for processing each character."
+                    },
+                    {
+                        text: "for(int i = 1; i <= message.size(); i++) {",
+                        correct: false,
+                        explanation: "Incorrect. String indices in C++ start at 0, not 1. This loop would also access message[message.size()], which would be out of bounds, causing an error."
+                    },
+                    {
+                        text: "while(message.length() > 0) {",
+                        correct: false,
+                        explanation: "Incorrect. This would create an infinite loop unless we modify the string inside the loop to reduce its length to zero, which isn't what we want to do."
+                    }
+                ],
+                resultCode: "    for(int i = 0; i < message.size(); i++) {",
+                updatedDisplay: `#include <iostream>
+#include <string>
+
+std::string encodeMessage(std::string message);
+
+std::string encodeMessage(std::string message) {
+    for(int i = 0; i < message.size(); i++) {
+        
+    }
+    
+    return message;
+}
+
+int main() {
+    std::string message;
+    std::cout << "Enter a message: ";
+    std::getline(std::cin, message);
+    
+    std::string encoded = encodeMessage(message);
+    
+    std::cout << "Original: " << message << std::endl;
+    std::cout << "Encoded: " << encoded << std::endl;
+    
+    return 0;
+}`
+            },
+            {
+                code: "        // TODO: Write the logic to replace vowels with numbers",
+                displayCode: `#include <iostream>
+#include <string>
+
+std::string encodeMessage(std::string message);
+
+std::string encodeMessage(std::string message) {
+    for(int i = 0; i < message.size(); i++) {
+        // TODO: Write the logic to replace vowels with numbers
+    }
+    
+    return message;
+}
+
+int main() {
+    std::string message;
+    std::cout << "Enter a message: ";
+    std::getline(std::cin, message);
+    
+    std::string encoded = encodeMessage(message);
+    
+    std::cout << "Original: " << message << std::endl;
+    std::cout << "Encoded: " << encoded << std::endl;
+    
+    return 0;
+}`,
+                explanation: "Inside the loop, the function needs to check each character and replace vowels (a, e, i, o, u) with corresponding numbers (1, 2, 3, 4, 5). It needs to handle both uppercase and lowercase vowels.",
+                isQuestion: true,
+                question: "Which code correctly replaces vowels with numbers?",
+                hint: "Remember that we need to handle both uppercase and lowercase vowels. Also consider which is more efficient: separate if statements or an if-else chain.",
+                options: [
+                    {
+                        text: `        switch(message[i]) {
+            case 'a': message[i] = '1'; break;
+            case 'e': message[i] = '2'; break;
+            case 'i': message[i] = '3'; break;
+            case 'o': message[i] = '4'; break;
+            case 'u': message[i] = '5'; break;
+        }`,
+                        correct: false,
+                        explanation: "This switch statement works for lowercase vowels, but doesn't handle uppercase vowels (A, E, I, O, U). According to our requirements, we need to replace both lowercase and uppercase vowels."
+                    },
+                    {
+                        text: `        if(message[i] == 'a' || message[i] == 'A') message[i] = '1';
+        else if(message[i] == 'e' || message[i] == 'E') message[i] = '2';
+        else if(message[i] == 'i' || message[i] == 'I') message[i] = '3';
+        else if(message[i] == 'o' || message[i] == 'O') message[i] = '4';
+        else if(message[i] == 'u' || message[i] == 'U') message[i] = '5';`,
+                        correct: true,
+                        explanation: "Correct! This if-else chain checks for both uppercase and lowercase vowels and replaces them with the appropriate numbers."
+                    },
+                    {
+                        text: `        if(message[i] == 'a') message[i] = '1';
+        if(message[i] == 'e') message[i] = '2';
+        if(message[i] == 'i') message[i] = '3';
+        if(message[i] == 'o') message[i] = '4';
+        if(message[i] == 'u') message[i] = '5';`,
+                        correct: false,
+                        explanation: "This function doesn't handle uppercase vowels as required."
+                    }
+                ],
+                resultCode: `        if(message[i] == 'a' || message[i] == 'A') message[i] = '1';
+        else if(message[i] == 'e' || message[i] == 'E') message[i] = '2';
+        else if(message[i] == 'i' || message[i] == 'I') message[i] = '3';
+        else if(message[i] == 'o' || message[i] == 'O') message[i] = '4';
+        else if(message[i] == 'u' || message[i] == 'U') message[i] = '5';`,
+                updatedDisplay: `#include <iostream>
+#include <string>
+
+std::string encodeMessage(std::string message);
+
+std::string encodeMessage(std::string message) {
+    for(int i = 0; i < message.size(); i++) {
+        if(message[i] == 'a' || message[i] == 'A') message[i] = '1';
+        else if(message[i] == 'e' || message[i] == 'E') message[i] = '2';
+        else if(message[i] == 'i' || message[i] == 'I') message[i] = '3';
+        else if(message[i] == 'o' || message[i] == 'O') message[i] = '4';
+        else if(message[i] == 'u' || message[i] == 'U') message[i] = '5';
+    }
+    
+    return message;
+}
+
+int main() {
+    std::string message;
+    std::cout << "Enter a message: ";
+    std::getline(std::cin, message);
+    
+    std::string encoded = encodeMessage(message);
+    
+    std::cout << "Original: " << message << std::endl;
+    std::cout << "Encoded: " << encoded << std::endl;
+    
+    return 0;
+}`
+            }
+        ];
+
+        // Modify the encodeMessage function in the JavaScript to match the expected C++ behavior
+        function encodeMessage(message) {
+            let result = message;
+            for (let i = 0; i < result.length; i++) {
+                if (result[i] === 'a' || result[i] === 'A') result = result.substring(0, i) + '1' + result.substring(i + 1);
+                else if (result[i] === 'e' || result[i] === 'E') result = result.substring(0, i) + '2' + result.substring(i + 1);
+                else if (result[i] === 'i' || result[i] === 'I') result = result.substring(0, i) + '3' + result.substring(i + 1);
+                else if (result[i] === 'o' || result[i] === 'O') result = result.substring(0, i) + '4' + result.substring(i + 1);
+                else if (result[i] === 'u' || result[i] === 'U') result = result.substring(0, i) + '5' + result.substring(i + 1);
+            }
+            return result;
+        }
+
+        function runCode() {
+            const message = messageInput.value || "Hello World";
+            const encoded = encodeMessage(message);
+
+            outputDisplay.innerHTML = `
+                <p><strong>Original:</strong> ${message}</p>
+                <p><strong>Encoded:</strong> ${encoded}</p>
+            `;
+        }
+
+        // Function to copy code to clipboard
+        function copyCodeToClipboard() {
+            // Use the completeCode variable which already contains the clean code
+            navigator.clipboard.writeText(completeCode)
+                .then(() => {
+                    // Show success feedback
+                    copyBtnText.textContent = "Copied!";
+                    copyCodeBtn.classList.add('copy-success');
+
+                    // Reset after 2 seconds
+                    setTimeout(() => {
+                        copyBtnText.textContent = "Copy Code";
+                        copyCodeBtn.classList.remove('copy-success');
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                    copyBtnText.textContent = "Failed to copy";
+
+                    // Reset after 2 seconds
+                    setTimeout(() => {
+                        copyBtnText.textContent = "Copy Code";
+                    }, 2000);
+                });
+        }
+
+        // Function to format code with syntax highlighting - FIXED to preserve indentation
+        function formatCode(code) {
+            // Normalize line endings but DON'T trim - this preserves indentation
+            code = code.replace(/\r\n/g, '\n');
+
+            // First escape HTML entities
+            let formattedCode = code.replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+
+            // Build formatted code with syntax highlighting
+            let result = [];
+            const lines = formattedCode.split('\n');
+
+            lines.forEach(line => {
+                // Preserve the original indentation (whitespace at the beginning)
+                const indentMatch = line.match(/^(\s*)/);
+                const indent = indentMatch ? indentMatch[0] : '';
+                const contentAfterIndent = line.substring(indent.length);
+
+                // Process comments (do this first)
+                if (contentAfterIndent.includes('//')) {
+                    const parts = contentAfterIndent.split('//');
+                    const codePart = parts[0];
+                    const comment = '//' + parts.slice(1).join('//');
+                    line = indent + highlightCodePart(codePart) + `<span class="comment">${comment}</span>`;
+                } else {
+                    line = indent + highlightCodePart(contentAfterIndent);
+                }
+                result.push(line);
+            });
+
+            // Join with newlines
+            return result.join('\n');
+        }
+
+        // Helper function to highlight a single line of code without comments
+        function highlightCodePart(text) {
+            // Highlight string literals
+            text = text.replace(/"([^"]*)"/g, '"<span class="string">$1</span>"');
+
+            // Highlight preprocessor directives
+            if (text.trim().startsWith('#')) {
+                return `<span class="keyword">${text}</span>`;
+            }
+
+            // Highlight C++ keywords
+            text = text.replace(/\b(return|if|else|for|while|namespace|using|else if|break|continue)\b/g,
+                '<span class="keyword">$1</span>');
+
+            // Highlight std namespace
+            text = text.replace(/\b(std::)/g, '<span class="keyword">$1</span>');
+
+            // Highlight C++ types
+            text = text.replace(/\b(int|string|void|bool|char|double|float|auto)\b/g,
+                '<span class="type">$1</span>');
+
+            // Highlight function names
+            text = text.replace(/\b(encodeMessage|main)\b/g,
+                '<span class="function">$1</span>');
+
+            // Highlight common functions
+            text = text.replace(/\b(cout|cin|getline|endl|size)\b/g,
+                '<span class="function">$1</span>');
+
+            return text;
+        }
+
+        // Function to highlight TODO text with syntax highlighting preserved - FIXED
+        function highlightTodo(fullCode, todoText) {
+            // Normalize line endings without trimming
+            fullCode = fullCode.replace(/\r\n/g, '\n');
+
+            // Split the code into lines before formatting
+            const lines = fullCode.split('\n');
+
+            // Format each line with syntax highlighting
+            const formattedLines = [];
+            for (let i = 0; i < lines.length; i++) {
+                // Apply highlighting to each line
+                let formattedLine = formatCode(lines[i]);
+
+                // Additionally highlight TODO lines
+                if (lines[i].includes('TODO')) {
+                    formattedLine = '<span class="highlight">' + formattedLine + '</span>';
+                }
+
+                formattedLines.push(formattedLine);
+            }
+
+            return formattedLines.join('\n');
+        }
+
+        // Generate line numbers - UPDATED FUNCTION
+        function generateLineNumbers(code) {
+            // Normalize line endings first
+            code = code.replace(/\r\n/g, '\n');
+            const lines = code.split('\n');
+            let lineNumbersHtml = '';
+
+            for (let i = 1; i <= lines.length; i++) {
+                // Using span with display:block instead of br for more consistent alignment
+                lineNumbersHtml += `<span class="line-num">${i}</span>`;
+            }
+
+            return lineNumbersHtml;
+        }
+
+        // Timer function
+        function startTimer() {
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+
+                timeDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+                // Add warning styles
+                if (timeLeft <= 60) {
+                    timer.classList.add('danger');
+                } else if (timeLeft <= 120) {
+                    timer.classList.add('warning');
+                }
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    // Auto-continue if time runs out
+                    if (quizSection.classList.contains('hidden')) {
+                        // In the problem statement section
+                        startQuiz();
+                    } else if (resultSection.classList.contains('hidden')) {
+                        // Force completion of the quiz
+                        showResults();
+                    }
+                }
+            }, 1000);
+        }
+
+        // Initialize timer
+        startTimer();
+
+        // Event listeners
+        startQuizBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', nextChunk);
+        resetQuizBtn.addEventListener('click', resetQuiz);
+        runCodeBtn.addEventListener('click', runCode);
+        hintBtn.addEventListener('click', showHint);
+        copyCodeBtn.addEventListener('click', copyCodeToClipboard);
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' && !nextBtn.classList.contains('hidden')) {
+                nextChunk();
+            }
+
+            if (e.key === 'h' && currentQuestion.classList.contains('hidden') === false) {
+                showHint();
+            }
+        });
+
+        // Functions
+        function showHint() {
+            hintBox.style.display = 'block';
+            hintBtn.textContent = 'Hide Hint';
+            hintBtn.removeEventListener('click', showHint);
+            hintBtn.addEventListener('click', hideHint);
+        }
+
+        function hideHint() {
+            hintBox.style.display = 'none';
+            hintBtn.textContent = 'Show Hint';
+            hintBtn.removeEventListener('click', hideHint);
+            hintBtn.addEventListener('click', showHint);
+        }
+
+        function startQuiz() {
+            problemStatement.classList.add('hidden');
+            quizSection.classList.remove('hidden');
+
+            step1.classList.remove('active');
+            step1.classList.add('completed');
+            step2.classList.add('active');
+            line1.classList.add('full');
+
+            // Start showing code chunks
+            showNextChunk();
+        }
+
+        // Updated showNextChunk function with fixes for highlighting and positioning - FIXED to preserve indentation
+        function showNextChunk() {
+            if (currentChunkIndex < codeSequence.length) {
+                const chunk = codeSequence[currentChunkIndex];
+
+                // Use the display code without trimming to preserve indentation
+                const displayCode = chunk.displayCode;
+
+                // Remove existing content first
+                lineNumbers.innerHTML = '';
+                codeContent.innerHTML = '';
+
+                // Generate line numbers for the code
+                lineNumbers.innerHTML = generateLineNumbers(displayCode);
+
+                // Show the full code with the current TODO highlighted
+                const highlightedCode = highlightTodo(displayCode, chunk.code);
+
+                // Set as textContent first to avoid browser interpretation, then use innerHTML
+                codeContent.innerHTML = highlightedCode;
+
+                // Use requestAnimationFrame to ensure the DOM updates properly
+                requestAnimationFrame(() => {
+                    // Apply fix to ensure code alignment
+                    fixCodeAlignment();
+                });
+
+                // Show explanation
+                if (chunk.explanation) {
+                    explanationContainer.innerHTML = chunk.explanation;
+                    explanationContainer.style.display = 'block';
+                } else {
+                    explanationContainer.style.display = 'none';
+                }
+
+                // If this chunk has a question, show it below the code
+                if (chunk.isQuestion) {
+                    currentQuestion.classList.remove('hidden');
+                    questionText.textContent = chunk.question;
+                    hintBox.textContent = chunk.hint;
+                    hintBox.style.display = 'none';
+
+                    // Clear previous options
+                    optionsContainer.innerHTML = '';
+
+                    // Add options
+                    chunk.options.forEach((option, index) => {
+                        const optionElement = document.createElement('div');
+                        optionElement.className = 'option';
+                        optionElement.innerHTML = `<pre>${option.text}</pre>`;
+                        optionElement.dataset.index = index;
+                        optionElement.dataset.correct = option.correct;
+
+                        optionElement.addEventListener('click', function () {
+                            // Remove selection from all options
+                            document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+
+                            // Select this option
+                            this.classList.add('selected');
+
+                            // Show if correct or incorrect
+                            if (option.correct) {
+                                this.classList.add('correct');
+                                correctAnswers++;
+                            } else {
+                                this.classList.add('incorrect');
+
+                                // Show correct option
+                                document.querySelectorAll('.option').forEach(o => {
+                                    if (o.dataset.correct === 'true') {
+                                        o.classList.add('correct');
+                                    }
+                                });
+                            }
+
+                            // Disable all options
+                            document.querySelectorAll('.option').forEach(o => {
+                                o.style.pointerEvents = 'none';
+                            });
+
+                            // Show explanation
+                            explanationElement.innerHTML = option.explanation;
+                            explanationElement.style.display = 'block';
+
+                            // Store the answer
+                            userAnswers.push({
+                                questionIndex: currentChunkIndex,
+                                selected: index,
+                                correct: option.correct
+                            });
+
+                            // Show next button
+                            nextBtn.classList.remove('hidden');
+
+                            // Hide hint button
+                            hintBtn.style.display = 'none';
+                            hintBox.style.display = 'none';
+                        });
+
+                        optionsContainer.appendChild(optionElement);
+                    });
+                } else {
+                    // If not a question, automatically proceed to next chunk after a delay
+                    currentChunkIndex++;
+                    setTimeout(showNextChunk, 2000);
+                }
+            } else {
+                // No more chunks, show results
+                showResults();
+            }
+        }
+
+        // Updated nextChunk function with fixes - FIXED to preserve indentation
+        function nextChunk() {
+            // Hide current question
+            currentQuestion.classList.add('hidden');
+            nextBtn.classList.add('hidden');
+            explanationElement.style.display = 'none';
+
+            const currentChunk = codeSequence[currentChunkIndex];
+
+            // Show the updated code without trimming to preserve indentation
+            const updatedDisplay = currentChunk.updatedDisplay;
+            lineNumbers.innerHTML = generateLineNumbers(updatedDisplay);
+            codeContent.innerHTML = formatCode(updatedDisplay);
+
+            // Move to next chunk
+            currentChunkIndex++;
+
+            // Update progress indicator
+            const progress = (currentChunkIndex / codeSequence.length) * 100;
+            if (progress >= 50) {
+                line2.classList.add('half');
+            }
+
+            // Apply fix to ensure code alignment
+            fixCodeAlignment();
+
+            // Short delay before showing next chunk
+            setTimeout(showNextChunk, 1000);
+        }
+
+        // Updated showResults function with fixes
+        function showResults() {
+            quizSection.classList.add('hidden');
+            resultSection.classList.remove('hidden');
+
+            step2.classList.remove('active');
+            step2.classList.add('completed');
+            step3.classList.add('active');
+            line2.classList.add('full');
+
+            // Display scores
+            correctCount.textContent = correctAnswers;
+            totalQuestions.textContent = codeSequence.length;
+            const percentage = Math.round((correctAnswers / codeSequence.length) * 100);
+            scoreDisplay.textContent = `${percentage}%`;
+
+            // Display the final complete code with line numbers - without trimming to preserve indentation
+            finalLineNumbers.innerHTML = generateLineNumbers(completeCode);
+            finalCodeContent.innerHTML = formatCode(completeCode);
+
+            // Apply fix to ensure code alignment in the final code display
+            fixFinalCodeAlignment();
+
+            // Auto-run the code with a default value
+            runCode();
+        }
+
+        function resetQuiz() {
+            // Reset to the beginning
+            resultSection.classList.add('hidden');
+            problemStatement.classList.remove('hidden');
+
+            // Reset progress indicators
+            step1.classList.add('active');
+            step1.classList.remove('completed');
+            step2.classList.remove('active');
+            step2.classList.remove('completed');
+            step3.classList.remove('active');
+            step3.classList.remove('completed');
+            line1.classList.remove('full');
+            line2.classList.remove('half');
+            line2.classList.remove('full');
+
+            // Reset current chunk index
+            currentChunkIndex = 0;
+            correctAnswers = 0;
+
+            // Reset user answers
+            userAnswers = [];
+
+            // Reset output
+            outputDisplay.innerHTML = '<p><strong>Output will appear here...</strong></p>';
+            messageInput.value = 'Hello World';
+
+            // Reset timer classes
+            timer.classList.remove('warning');
+            timer.classList.remove('danger');
+
+            // Reset timer
+            clearInterval(countdownInterval);
+            timeLeft = 300;
+            timeDisplay.textContent = '5:00';
+            startTimer();
+        }
+
+        // UPDATED: Function to fix code alignment
+        function fixCodeAlignment() {
+            const codeContainers = document.querySelectorAll('.code-container');
+
+            codeContainers.forEach(container => {
+                const lineNumbers = container.querySelector('.line-numbers');
+                const codeContent = container.querySelector('code');
+
+                if (lineNumbers && codeContent) {
+                    // Check if there's a mismatch in number of lines
+                    const numLines = lineNumbers.querySelectorAll('.line-num').length;
+                    const codeLines = (codeContent.textContent.match(/\n/g) || []).length + 1;
+
+                    if (numLines !== codeLines) {
+                        // Re-generate line numbers to match code lines
+                        lineNumbers.innerHTML = '';
+                        for (let i = 1; i <= codeLines; i++) {
+                            const span = document.createElement('span');
+                            span.className = 'line-num';
+                            span.textContent = i;
+                            lineNumbers.appendChild(span);
+                        }
+                    }
+
+                    // Get the computed styles to ensure identical line heights
+                    const lineNumbersStyle = window.getComputedStyle(lineNumbers);
+                    const codeContentStyle = window.getComputedStyle(codeContent);
+
+                    // Use one consistent line height
+                    const lineHeight = '1.5';
+                    lineNumbers.style.lineHeight = lineHeight;
+                    codeContent.style.lineHeight = lineHeight;
+
+                    // Ensure equal padding on both elements
+                    const paddingTop = '20px';
+                    const paddingBottom = '20px';
+                    lineNumbers.style.paddingTop = paddingTop;
+                    lineNumbers.style.paddingBottom = paddingBottom;
+                    codeContent.style.paddingTop = paddingTop;
+                    codeContent.style.paddingBottom = paddingBottom;
+
+                    // Remove any margins that could affect alignment
+                    lineNumbers.style.margin = '0';
+                    codeContent.style.margin = '0';
+
+                    // Ensure proper whitespace handling
+                    codeContent.style.whiteSpace = 'pre';
+                }
+            });
+        }
+
+        // UPDATED: Function to fix alignment in the final code display
+        function fixFinalCodeAlignment() {
+            const finalCodeContainer = document.getElementById('finalCode');
+            const finalLineNumbers = finalCodeContainer.querySelector('.line-numbers');
+            const finalCodeContent = finalCodeContainer.querySelector('code');
+
+            if (finalLineNumbers && finalCodeContent) {
+                // Get the computed styles to ensure identical line heights
+                const lineNumbersStyle = window.getComputedStyle(finalLineNumbers);
+                const codeContentStyle = window.getComputedStyle(finalCodeContent);
+
+                // Use one consistent line height
+                const lineHeight = '1.5';
+                finalLineNumbers.style.lineHeight = lineHeight;
+                finalCodeContent.style.lineHeight = lineHeight;
+
+                // Ensure equal padding on both elements
+                const paddingTop = '20px';
+                const paddingBottom = '20px';
+                finalLineNumbers.style.paddingTop = paddingTop;
+                finalLineNumbers.style.paddingBottom = paddingBottom;
+                finalCodeContent.style.paddingTop = paddingTop;
+                finalCodeContent.style.paddingBottom = paddingBottom;
+
+                // Remove any margins that could affect alignment
+                finalLineNumbers.style.margin = '0';
+                finalCodeContent.style.margin = '0';
+            }
+        }
+
+        // Call the function when the page loads to fix initial alignment
+        document.addEventListener('DOMContentLoaded', function () {
+            fixCodeAlignment();
+            fixFinalCodeAlignment();
+        });
+
+        // Also call it now in case the page is already loaded
+        fixCodeAlignment();
+        fixFinalCodeAlignment();
+    </script>
+</body>
+
+</html>
