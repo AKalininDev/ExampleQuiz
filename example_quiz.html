@@ -683,7 +683,7 @@ int main() {
     
     return 0;
 }`,
-                explanation: "<p>Now we need to implement our encodeMessage() function.</p><p>The function already has a skeleton with a return statement, but it needs a loop to sequentially process each character in the input string.</p>",
+                explanation: "<p>Now, we need to implement our encodeMessage() function.</p><p>The function already has a skeleton with a return statement, but it needs a loop to process each character in the input string sequentially.</p>",
                 isQuestion: true,
                 question: "Which loop correctly iterates through each character in the string?",
                 hint: "Strings in C++ can be accessed like arrays, with indices starting from 0. You'll need to use the string's size or length method to determine how many characters to process.",
@@ -701,7 +701,7 @@ int main() {
                     {
                         text: "while(message.length() > 0) {",
                         correct: false,
-                        explanation: "Incorrect. This would create an infinite loop unless we modify the string inside the loop to reduce its length to zero, which isn't what we want to do. We need to process each character without modifying the string's length."
+                        explanation: "Incorrect. This would create an infinite loop unless we modify the string inside the loop to reduce its length to zero, which isn't what we want to do."
                     }
                 ],
                 resultCode: "    for(int i = 0; i < message.size(); i++) {",
@@ -781,7 +781,7 @@ int main() {
         else if(message[i] == 'o' || message[i] == 'O') message[i] = '4';
         else if(message[i] == 'u' || message[i] == 'U') message[i] = '5';`,
                         correct: true,
-                        explanation: "Correct! This if-else chain checks for both uppercase and lowercase vowels and replaces them with the appropriate numbers. Using an if-else chain is efficient because once a condition is satisfied, the remaining conditions aren't checked."
+                        explanation: "Correct! This if-else chain checks for both uppercase and lowercase vowels and replaces them with the appropriate numbers."
                     },
                     {
                         text: `        if(message[i] == 'a') message[i] = '1';
